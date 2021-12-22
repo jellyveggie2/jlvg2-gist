@@ -4,7 +4,7 @@
  */
 
 //--------------------------------
-// Tab selector
+// Buttons, tabs, UI and misc.
 //--------------------------------
 var panelIdList = ["infoPanel", "templatePanel", "exportPanel"];
 function panelSelect(panelId) {
@@ -36,6 +36,12 @@ function toggleClass(id, className) {
 function toggleHelp(helpButton, helpPanel) {
 	toggleClass(helpButton, "linkOn");
 	toggleClass(helpPanel, "hidden");
+}
+
+function toggleGrid() {
+	grid_enabled = !grid_enabled;
+	display_bitmap();
+	toggleClass("grid_button", "linkOn");
 }
 
 //--------------------------------
@@ -320,6 +326,8 @@ function loadTemplate(template) {
 // Exports the current bitmap as a template
 function exportTemplate() {
 	var output = document.getElementById("export-text");
+	
+	// Build basic template
 	var template = {w: width, h: height, rgn: [], bmp: []};
 	var colors = [];
 	for (pixel in bitmap) {
@@ -329,6 +337,48 @@ function exportTemplate() {
 		}
 		template.bmp.push(colors.indexOf(bitmap[pixel]));
 	}
+	
+	// Get template palette
+	var exportPalette = document.getElementById('export-palette').value.split(',')
+	
+	// Convert
+	if (exportPalette.length && exportPalette[0]) {
+		// Map each region's color to the closest template palette color, and discard unused colors
+		for (paletteColor in exportPalette) {
+			for (region in template.rgn) {
+				var pRgba = hexToRgba(exportPalette[paletteColor]);
+				var rRgba = hexToRgba(template.rgn[region].clr);
+				var distance = ((pRgba.r - rRgba.r) ** 2 + (pRgba.g - rRgba.g) ** 2 + (pRgba.b - rRgba.b) ** 2) ** 0.5;
+				if (!template.rgn[region].closest || distance < template.rgn[region].distance) {
+					template.rgn[region].closest = exportPalette[paletteColor];
+					template.rgn[region].distance = distance;
+				}
+			}
+		}
+		
+		// Recreate regions and convert bitmap
+		var newBmp = [];
+		var newRgn = [];
+		for (paletteColor in exportPalette) {
+			var index = -1;
+			for (region in template.rgn) {
+				if (template.rgn[region].closest && template.rgn[region].closest == exportPalette[paletteColor]) {
+					if (index < 0) {
+						newRgn.push({clr:exportPalette[paletteColor], txt:""});
+						index = newRgn.length - 1;
+					}
+					for (pixel in template.bmp) {
+						if (template.bmp[pixel] == region) {
+							newBmp[pixel] = index;
+						}
+					}
+				}
+			}
+		}
+		template.rgn = newRgn;
+		template.bmp = newBmp;
+	}
+	
 	output.value = JSON.stringify(template);
 }
 
