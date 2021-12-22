@@ -107,6 +107,14 @@
 						<textarea id="export-text" rows="5"></textarea>
 						<a class="button" onclick="exportTemplate()">Export painting as template</a>
 					</div><br/>
+					<h3>Template palette</h3>
+					<div>
+						<textarea id="export-palette" rows="5"></textarea>
+					</div>
+					<p>WIP: if you type a list of colors here (eg: "#ff0000,#00ff00,#0000ff") the template you get when 
+					exporting will map it's colors to those on your list.</p><br/>
+					
+					
 				</div>
 
 				<!-- Template panel -->
@@ -185,7 +193,7 @@
 								<input type="text" id="paint_strength" value="0.5" onchange="setStrength();"/>
 							&nbsp;</span>
 							<a id="paint_strength_increase" class="button" onclick="changeStrength(0.05);"><div class="uiIcon16 icon-plus"></div></a>
-							<a class="button" onclick="grid_enabled = !grid_enabled; display_bitmap();">Toggle grid</a>
+							<a id="grid_button" class="button" onclick="toggleGrid()">Toggle grid</a>
 						</span>
 					</div>
 					<!-- Selected Color -->
