@@ -107,14 +107,22 @@
 						<textarea id="export-text" rows="5"></textarea>
 						<a class="button" onclick="exportTemplate()">Export painting as template</a>
 					</div><br/>
+					<h2>WORK IN PROGRESS</h2>
 					<h3>Template palette</h3>
 					<div>
 						<textarea id="export-palette" rows="5"></textarea>
 					</div>
-					<p>WIP: if you type a list of colors here (eg: "#ff0000,#00ff00,#0000ff") the template you get when 
+					<p>If you type a list of colors here (eg: "#ff0000,#00ff00,#0000ff") the template you get when 
 					exporting will map it's colors to those on your list.</p><br/>
-					
-					
+
+					<h3>Log importer</h3>
+					<div>
+						<textarea id="import-logs" rows="5"></textarea>
+					</div>
+					<p>Parses logs lines from the hrefs logs for a specific painting saving interaction to recreate
+					said painting. Note: Saving a painting takes multiple lines! Doublecheck <code>multipart-total</code>
+					and <code>multipart-number</code> to make sure you're not missing any or including extras, and make
+					sure they're in order.</p><br/>			
 				</div>
 
 				<!-- Template panel -->
