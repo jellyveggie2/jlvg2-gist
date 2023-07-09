@@ -383,6 +383,39 @@ function exportTemplate() {
 }
 
 //--------------------------------
+// Log importer
+//--------------------------------
+function importFromLogs() {
+	var input = document.getElementById("import-logs").value;
+	var lines = input.split("\n");
+	var params = "";
+
+	for (i in lines) {
+		var index = lines[i].indexOf("multipart-content=");
+		params += lines[i].slice(index+"multipart-content=".length);
+	}
+
+	params = decodeURIComponent(params);
+	params = params.split(";");
+
+	for (i in params) {
+		var param_kv = params[i].split("=");
+		var key = param_kv[0];
+		var value = decodeURIComponent(param_kv[1]);
+		if (key == "bitmap") {
+			bitmap = value.split(",");
+			display_bitmap();
+		} else if (key == "author") {
+			document.getElementById("author").value = value
+		} else if (key == "title") {
+			document.getElementById("title").value = value
+		} else if (key == "description") {
+			document.getElementById("description").value = value
+		}
+	}
+}
+
+//--------------------------------
 // INIT
 //--------------------------------
 var src;
