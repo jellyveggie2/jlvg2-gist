@@ -97,7 +97,7 @@
 					<h3>Import</h3>
 					<div>
 						<textarea id="import-text" rows="5"></textarea>
-						<a class="button" onclick="loadTemplate(document.getElementById('import-text').value)">Import template</a><br/>
+						<a class="button" onclick="loadTemplate(document.getElementById('import-text').value)">Import template</a>
 					</div>
 					<!-- Error messages -->
 					<div class="item" id="template_import_errors" style="display:none"></div><br/>
@@ -118,12 +118,14 @@
 					<h3>Log importer</h3>
 					<div>
 						<textarea id="import-logs" rows="5"></textarea>
-						<a class="button" onclick="importFromLogs()">Import Logs</a><br/>
-					</div>
+						<a class="button" onclick="importFromLogs()">Import Logs</a>
+					</div><br/>
 					<p>Parses logs lines from the hrefs logs for a specific painting saving interaction to recreate
-					said painting. Note: Saving a painting takes multiple lines! Doublecheck <code>multipart-total</code>
+					said painting. No width or height data, so you'll have to figure out the right preset to visualize 
+					this painting all on your own</p> 
+					<p>Note: Saving a painting takes multiple lines! Doublecheck <code>multipart-total</code>
 					and <code>multipart-number</code> to make sure you're not missing any or including extras, and make
-					sure they're in order.</p><br/>			
+					sure they're in order.</p>
 				</div>
 
 				<!-- Template panel -->
